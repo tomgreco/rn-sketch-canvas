@@ -31,6 +31,7 @@ export default class RNSketchCanvas extends React.Component {
     strokeComponent: PropTypes.func,
     strokeSelectedComponent: PropTypes.func,
     strokeWidthComponent: PropTypes.func,
+    strokeWidhtOnPress: PropTypes.func,
 
     strokeColors: PropTypes.arrayOf(PropTypes.shape({ color: PropTypes.string })),
     defaultStrokeIndex: PropTypes.number,
@@ -166,6 +167,8 @@ export default class RNSketchCanvas extends React.Component {
     if ((this.state.strokeWidth >= this.props.maxStrokeWidth && this._strokeWidthStep > 0) ||
       (this.state.strokeWidth <= this.props.minStrokeWidth && this._strokeWidthStep < 0))
       this._strokeWidthStep = -this._strokeWidthStep
+
+    this.props.strokeWidthOnPress();
     this.setState({ strokeWidth: this.state.strokeWidth + this._strokeWidthStep })
   }
 
