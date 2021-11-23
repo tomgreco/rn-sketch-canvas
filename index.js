@@ -168,7 +168,7 @@ export default class RNSketchCanvas extends React.Component {
       (this.state.strokeWidth <= this.props.minStrokeWidth && this._strokeWidthStep < 0))
       this._strokeWidthStep = -this._strokeWidthStep
 
-    this.props.strokeWidthOnPress();
+    this.props.strokeWidthOnPress(this.state.strokeWidth + this._strokeWidthStep);
     this.setState({ strokeWidth: this.state.strokeWidth + this._strokeWidthStep })
   }
 
