@@ -156,7 +156,7 @@ export default class RNSketchCanvas extends React.Component {
       this._sketchCanvas.save(p.imageType, p.transparent, p.folder ? p.folder : '', p.filename, p.includeImage !== false, p.includeText !== false, p.cropToImageSize || false)
     } else {
       const date = new Date()
-      this._sketchCanvas.save('png', false, '', 
+      this._sketchCanvas.save('png', false, '',
         date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + ('0' + date.getDate()).slice(-2) + ' ' + ('0' + date.getHours()).slice(-2) + '-' + ('0' + date.getMinutes()).slice(-2) + '-' + ('0' + date.getSeconds()).slice(-2),
         true, true, false)
     }
@@ -169,26 +169,29 @@ export default class RNSketchCanvas extends React.Component {
     this.setState({ strokeWidth: this.state.strokeWidth + this._strokeWidthStep })
   }
 
-  _renderItem = ({ item, index }) => (
-    <TouchableOpacity style={{ marginHorizontal: 2.5 }} onPress={() => {
-      if (this.state.color === item.color) {
-        const index = this.props.alphlaValues.indexOf(this.state.alpha)
-        if (this._alphaStep < 0) {
-          this._alphaStep = index === 0 ? 1 : -1
-          this.setState({ alpha: this.props.alphlaValues[index + this._alphaStep] })
-        } else {
-          this._alphaStep = index === this.props.alphlaValues.length - 1 ? -1 : 1
-          this.setState({ alpha: this.props.alphlaValues[index + this._alphaStep] })
-        }
+  colorOnPress(item) {
+    if (this.state.color === item.color) {
+      const index = this.props.alphlaValues.indexOf(this.state.alpha)
+      if (this._alphaStep < 0) {
+        this._alphaStep = index === 0 ? 1 : -1
+        this.setState({ alpha: this.props.alphlaValues[index + this._alphaStep] })
       } else {
-        this.setState({ color: item.color })
-        this._colorChanged = true
+        this._alphaStep = index === this.props.alphlaValues.length - 1 ? -1 : 1
+        this.setState({ alpha: this.props.alphlaValues[index + this._alphaStep] })
       }
-    }}>
-      {this.state.color !== item.color && this.props.strokeComponent && this.props.strokeComponent(item.color)}
-      {this.state.color === item.color && this.props.strokeSelectedComponent && this.props.strokeSelectedComponent(item.color + this.state.alpha, index, this._colorChanged)}
-    </TouchableOpacity>
-  )
+    } else {
+      this.setState({ color: item.color })
+      this._colorChanged = true
+    }
+  }
+
+  getSelectedColor() {
+    return this.state.color;
+  }
+
+  getStrokeWidth() {
+    return this.state.strokeWidth;
+  }
 
   componentDidUpdate() {
     this._colorChanged = false
@@ -218,31 +221,6 @@ export default class RNSketchCanvas extends React.Component {
               </TouchableOpacity>)
             }
           </View>
-          <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end' }}>
-            {this.props.strokeWidthComponent && (
-              <TouchableOpacity onPress={() => { this.nextStrokeWidth() }}>
-                {this.props.strokeWidthComponent(this.state.strokeWidth)}
-              </TouchableOpacity>)
-            }
-
-            {this.props.undoComponent && (
-              <TouchableOpacity onPress={() => { this.props.onUndoPressed(this.undo()) }}>
-                {this.props.undoComponent}
-              </TouchableOpacity>)
-            }
-
-            {this.props.clearComponent && (
-              <TouchableOpacity onPress={() => { this.clear(); this.props.onClearPressed() }}>
-                {this.props.clearComponent}
-              </TouchableOpacity>)
-            }
-
-            {this.props.saveComponent && (
-              <TouchableOpacity onPress={() => { this.save() }}>
-                {this.props.saveComponent}
-              </TouchableOpacity>)
-            }
-          </View>
         </View>
         <SketchCanvas
           ref={ref => this._sketchCanvas = ref}
@@ -260,16 +238,6 @@ export default class RNSketchCanvas extends React.Component {
           permissionDialogTitle={this.props.permissionDialogTitle}
           permissionDialogMessage={this.props.permissionDialogMessage}
         />
-        <View style={{ flexDirection: 'row' }}>
-          <FlatList
-            data={this.props.strokeColors}
-            extraData={this.state}
-            keyExtractor={() => Math.ceil(Math.random() * 10000000).toString()}
-            renderItem={this._renderItem}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
       </View>
     );
   }
