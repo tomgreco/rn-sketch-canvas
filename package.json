@@ -1,6 +1,6 @@
 {
   "name": "rn-sketch-canvas",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Allows you to draw on both iOS and Android devices and sync the drawing data between users",
   "main": "index.js",
   "types": "index.d.ts",
