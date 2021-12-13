@@ -42,7 +42,6 @@ export default class RNSketchCanvas extends React.Component {
     strokeWidthStep: PropTypes.number,
 
     savePreference: PropTypes.func,
-    onSketchSaved: PropTypes.func,
 
     text: PropTypes.arrayOf(PropTypes.shape({
       text: PropTypes.string,
@@ -115,7 +114,6 @@ export default class RNSketchCanvas extends React.Component {
     strokeWidthStep: 3,
 
     savePreference: null,
-    onSketchSaved: () => { },
 
     text: null,
     localSourceImage: null,
@@ -238,7 +236,6 @@ export default class RNSketchCanvas extends React.Component {
           onStrokeEnd={this.props.onStrokeEnd}
           user={this.props.user}
           strokeWidth={this.state.strokeWidth}
-          onSketchSaved={(success, path) => this.props.onSketchSaved(success, path)}
           onPathsChange={this.props.onPathsChange}
           text={this.props.text}
           localSourceImage={this.props.localSourceImage}

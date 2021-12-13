@@ -31,7 +31,6 @@ class SketchCanvas extends React.Component {
     onStrokeStart: PropTypes.func,
     onStrokeChanged: PropTypes.func,
     onStrokeEnd: PropTypes.func,
-    onSketchSaved: PropTypes.func,
     user: PropTypes.string,
 
     touchEnabled: PropTypes.bool,
@@ -62,7 +61,6 @@ class SketchCanvas extends React.Component {
     onStrokeStart: () => { },
     onStrokeChanged: () => { },
     onStrokeEnd: () => { },
-    onSketchSaved: () => { },
     user: null,
 
     touchEnabled: true,
@@ -270,10 +268,8 @@ class SketchCanvas extends React.Component {
               this._savePromise.reject(false);
             }
             this._savePromise = null;
-            //this.props.onSketchSaved(e.nativeEvent.success, e.nativeEvent.path)
           }
           else if (e.nativeEvent.hasOwnProperty('success')) {
-            //this.props.onSketchSaved(e.nativeEvent.success)
             if(e.nativeEvent.success) {
               this._savePromise.resolve('');
             }

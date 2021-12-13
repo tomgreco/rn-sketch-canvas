@@ -28,12 +28,7 @@ Features
 -------------
 Install from `npm` (only support RN >= 0.40)
 ```bash
-npm install @terrylinla/react-native-sketch-canvas --save
-```
-Link native code
-```bash
-react-native link @terrylinla/react-native-sketch-canvas
-```
+npm install rn-sketch-canvas
 
 ## Usage
 -------------
@@ -85,7 +80,6 @@ AppRegistry.registerComponent('example', () => example);
 | onStrokeStart | `function` | An optional function which accpets 2 arguments `x` and `y`. Called when user's finger touches the canvas (starts to draw) |
 | onStrokeChanged | `function` | An optional function which accpets 2 arguments `x` and `y`. Called when user's finger moves |
 | onStrokeEnd | `function` | An optional function called when user's finger leaves the canvas (end drawing) |
-| onSketchSaved | `function` | An optional function which accpets 2 arguments `success` and `path`. If `success` is true, image is saved successfully and the saved image path might be in second argument. In Android, image path will always be returned. In iOS, image is saved to camera roll or file system, path will be set to null or image location respectively. |
 | onPathsChange | `function` | An optional function which accpets 1 argument `pathsCount`, which indicates the number of paths. Useful for UI controls. (Thanks to toblerpwn) |
 | user | `string` | An identifier to identify who draws the path. Useful when undo between two users |
 | touchEnabled | `bool` | If false, disable touching. Default is true.  |
