@@ -169,7 +169,7 @@ export default class RNSketchCanvas extends React.Component<RNSketchCanvasProps 
   undo(): number
   addPath(data: Path): void
   deletePath(id: number): void
-  save(): void
+  save(): Promise<string>
   nextStrokeWidth(): void
 
   getSelectedColor(): string;
