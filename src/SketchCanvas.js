@@ -88,6 +88,7 @@ class SketchCanvas extends React.Component {
     this._offset = { x: 0, y: 0 }
     this._size = { width: 0, height: 0 }
     this._initialized = false
+    this._savePromise = null;
 
     this.state.text = this._processText(props.text ? props.text.map(t => Object.assign({}, t)) : null)
   }
@@ -137,7 +138,27 @@ class SketchCanvas extends React.Component {
   }
 
   save(imageType, transparent, folder, filename, includeImage, includeText, cropToImageSize) {
-    UIManager.dispatchViewManagerCommand(this._handle, UIManager.RNSketchCanvas.Commands.save, [imageType, folder, filename, transparent, includeImage, includeText, cropToImageSize])
+
+    let promise = new Promise((resolve, reject) => {
+      this._savePromise = {
+        resolve: resolve,
+        reject: reject
+      };
+    });
+
+    UIManager.dispatchViewManagerCommand(
+      this._handle,
+      UIManager.RNSketchCanvas.Commands.save,
+      [ imageType,
+        folder,
+        filename,
+        transparent,
+        includeImage,
+        includeText,
+        cropToImageSize ]
+    );
+
+    return promise;
   }
 
   getPaths() {
@@ -168,7 +189,7 @@ class SketchCanvas extends React.Component {
           id: parseInt(Math.random() * 100000000), color: this.props.strokeColor,
           width: this.props.strokeWidth, data: []
         }
-        
+
         UIManager.dispatchViewManagerCommand(
           this._handle,
           UIManager.RNSketchCanvas.Commands.newPath,
@@ -240,10 +261,26 @@ class SketchCanvas extends React.Component {
         onChange={(e) => {
           if (e.nativeEvent.hasOwnProperty('pathsUpdate')) {
             this.props.onPathsChange(e.nativeEvent.pathsUpdate)
-          } else if (e.nativeEvent.hasOwnProperty('success') && e.nativeEvent.hasOwnProperty('path')) {
-            this.props.onSketchSaved(e.nativeEvent.success, e.nativeEvent.path)
-          } else if (e.nativeEvent.hasOwnProperty('success')) {
-            this.props.onSketchSaved(e.nativeEvent.success)
+          }
+          else if (e.nativeEvent.hasOwnProperty('success') && e.nativeEvent.hasOwnProperty('path')) {
+            if(e.nativeEvent.success) {
+              this._savePromise.resolve(e.nativeEvent.path);
+            }
+            else {
+              this._savePromise.reject(false);
+            }
+            this._savePromise = null;
+            //this.props.onSketchSaved(e.nativeEvent.success, e.nativeEvent.path)
+          }
+          else if (e.nativeEvent.hasOwnProperty('success')) {
+            //this.props.onSketchSaved(e.nativeEvent.success)
+            if(e.nativeEvent.success) {
+              this._savePromise.resolve('');
+            }
+            else {
+              this._savePromise.reject(false);
+            }
+            this._savePromise = null;
           }
         }}
         localSourceImage={this.props.localSourceImage}

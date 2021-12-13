@@ -99,7 +99,7 @@ export class SketchCanvas extends React.Component<SketchCanvasProps & ViewProper
    * @param includeText Set to `true` to include the text drawn from `Text`.
    * @param cropToImageSize Set to `true` to crop output image to the image loaded from `LocalSourceImage`
    */
-  save(imageType: ImageType, transparent: boolean, folder: string, filename: string, includeImage: boolean, includeText: boolean, cropToImageSize: boolean): void
+  save(imageType: ImageType, transparent: boolean, folder: string, filename: string, includeImage: boolean, includeText: boolean, cropToImageSize: boolean): Promise<string>
   getPaths(): Path[]
 
   /**
@@ -156,8 +156,8 @@ export interface RNSketchCanvasProps {
   text?: CanvasText[]
   /**
    * {
-   *    path: string, 
-   *    directory: string, 
+   *    path: string,
+   *    directory: string,
    *    mode: 'AspectFill' | 'AspectFit' | 'ScaleToFill'
    * }
    */
@@ -171,6 +171,9 @@ export default class RNSketchCanvas extends React.Component<RNSketchCanvasProps 
   deletePath(id: number): void
   save(): void
   nextStrokeWidth(): void
+
+  getSelectedColor(): string;
+  colorOnPress(color: any): void
 
   static MAIN_BUNDLE: string
   static DOCUMENT: string

@@ -1,5 +1,7 @@
-react-native-sketch-canvas
+rn-sketch-canvas
 ===================
+
+Forked form @terrylinla/react-native-sketch-canvas
 
 A React Native component for drawing by touching on both iOS and Android.
 
@@ -46,7 +48,7 @@ import {
   View,
 } from 'react-native';
 
-import { SketchCanvas } from '@terrylinla/react-native-sketch-canvas';
+import { SketchCanvas } from 'rn-sketch-canvas';
 
 export default class example extends Component {
   render() {
@@ -76,7 +78,7 @@ AppRegistry.registerComponent('example', () => example);
 #### Properties
 -------------
 | Prop  | Type | Description |
-| :------------ |:---------------:| :---------------| 
+| :------------ |:---------------:| :---------------|
 | style | `object` | Styles to be applied on canvas component |
 | strokeColor | `string` | Set the color of stroke, which can be #RRGGBB or #RRGGBBAA. If strokeColor is set to #00000000, it will automatically become an eraser. <br/>NOTE: Once an eraser path is sent to Android, Android View will disable hardware acceleration automatically. It might reduce the canvas performance afterward. |
 | strokeWidth | `number` | The thickness of stroke |
@@ -196,7 +198,7 @@ AppRegistry.registerComponent('example', () => example);
 #### Properties
 -------------
 | Prop  | Type | Description |
-| :------------ |:---------------:| :---------------| 
+| :------------ |:---------------:| :---------------|
 | containerStyle | `object` | Styles to be applied on container |
 | canvasStyle | `object` | Styles to be applied on canvas component |
 | onStrokeStart | `function` | See [above](#properties) |
@@ -250,14 +252,14 @@ Note: Because native module cannot read the file in JS bundle, file path cannot 
 ### Typical Usage
 * Load image from app native bundle
 <br/>
-  * Android: 
+  * Android:
     1. Put your images into android/app/src/main/res/drawable.
-    2. Set `filename` to the name of image files with or without file extension. 
+    2. Set `filename` to the name of image files with or without file extension.
     3. Set `directory` to ''
 <br/>
   * iOS:
     1. Open Xcode and add images to project by right clicking `Add Files to [YOUR PROJECT NAME]`.
-    2. Set `filename` to the name of image files with file extension. 
+    2. Set `filename` to the name of image files with file extension.
     3. Set `directory` to MAIN_BUNDLE (e.g. RNSketchCanvas.MAIN_BUNDLE or SketchCanvas.MAIN_BUNDLE)
 * Load image from camera
   1. Retrive photo complete path (including file extension) after snapping.
@@ -347,7 +349,7 @@ Note: Because native module cannot read the file in JS bundle, file path cannot 
 }
 ```
 | Property | Type | Description | Default |
-| :------------ |:---------------|:---------------|:---------------| 
+| :------------ |:---------------|:---------------|:---------------|
 | text | string | the text to display (can be multiline by `\n`) | |
 | font? | string | Android: You can set `font` to `fonts/[filename].ttf` to load font in `android/app/src/main/assets/fonts/` in your Android project<br/>iOS: Set `font` that included with iOS | |
 | fontSize? | number | font size | 12 |
@@ -361,7 +363,7 @@ Note: Because native module cannot read the file in JS bundle, file path cannot 
 
 ## Performance
 -------------
-1. For non-transparent path, both Android and iOS performances are good. Because when drawing non-transparent path, only last segment is drawn on canvas, no matter how long the path is, CPU usage is stable at about 20% and 15% in Android and iOS respectively. 
+1. For non-transparent path, both Android and iOS performances are good. Because when drawing non-transparent path, only last segment is drawn on canvas, no matter how long the path is, CPU usage is stable at about 20% and 15% in Android and iOS respectively.
 2. For transparent path, CPU usage stays at around 25% in Android, however, in iOS, CPU usage grows to 100% :(.
 * Android (https://youtu.be/gXdCEN6Enmk)<br/>
 <img src="https://i.imgur.com/YQ2wVMc.jpg" height="400" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/CuIar4h.jpg" height="400" />
@@ -372,7 +374,7 @@ Note: Because native module cannot read the file in JS bundle, file path cannot 
 -------------
 The source code includes 3 examples, using build-in UI components, using with only canvas, and sync between two canvases.
 
-Check full example app in the [example](./example) folder 
+Check full example app in the [example](./example) folder
 
 ## Troubleshooting
 -------------
